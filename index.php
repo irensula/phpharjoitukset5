@@ -1,11 +1,19 @@
 <?php
     require "./dbfunctions.php";
+    
     if(isset($_GET['luokka'])) {
         $luokka = htmlspecialchars($_GET['luokka']);
-        $luokat = insertNewClass($luokka);
-        
-     } else if (isset($_GET["deletedclassid"])) {
+        $luokat = insertNewClass($luokka);  
+     
+    } else if (isset($_GET["deletedclassid"])) {
         $ok = deleteClass($_GET['deletedclassid']);
+
+    } else if(isset($_GET['rotu'])) {
+        $rotu = htmlspecialchars($_GET['rotu']);
+        $rodut = insertNewRace($rotu);  
+
+    } else if (isset($_GET["deletedraceid"])) {
+        $deleteRace = deleteRace($_GET['deletedraceid']);
 
     } else if (isset($_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'])) {
         $hahmonNimi = htmlspecialchars($_GET['hahmon-nimi']);
@@ -45,8 +53,37 @@
                 echo "<li>" . $class["name"] ?>  
                 <form class="delete-link" action='index.php' method='get'>
                 
-                <input type='hidden' name='deletedclassid' value='<?= $class["classID"] ?>'>
-                    <input class="delete-class-button" type='submit' name='submit' value='Poista'>
+                    <input type='hidden' name='deletedclassid' value='<?= $class["classID"] ?>'>
+                    <input class="delete-button" type='submit' name='submit' value='Poista'>
+
+                </form>
+
+            </li>
+            <?php } ?>
+    </ul>
+
+    <!-- RODUT -->
+    <h2>Rodut</h2>
+    <h3>Lisää rotu</h3>
+
+    <form action="index.php" method="get">
+        <label for="rotu">Luokan nimi</label>
+        <input type="text" name="rotu">
+        <input type='submit' value='Lisää'>
+    </form>
+
+    <h3>Rodut</h3>
+
+    <ul>
+        <?php
+            $races = getAllRaces();
+            foreach($races as $race) {
+                echo "<li>" . $race["name"] ?>  
+                <form class="delete-link" action='index.php' method='get'>
+
+                    <input type='hidden' name='deletedraceid' value='<?= $race["raceID"] ?>'>
+                    <input class="delete-button" type='submit' name='submit' value='Poista'>
+
                 </form>
 
             </li>
@@ -59,18 +96,18 @@
 
     <form action="index.php" method="get">
         <label for="rotu">Rotu</label>
-        <select name="rotu" id="rotu">
-            <option value="rotu">Ihminen</option>
-            <option value="tonttu">Tonttu</option>
-            <option value="keiju">Keiju</option>
-            <option value="hiisi">Hiisi</option>
+        
+        <select name="hahmon-rotu" id="hahmon-rotu">
+            <?php foreach($races as $race) { ?>
+                    echo "<option value="hahmon-rotu"><?= $race["name"] ?></option>"
+            <?php } ?>
         </select>
 
         <label for="hahmon-luokka">Luokka</label>
         <select name="hahmon-luokka" id="hahmon-luokka">
-        <?php foreach($classes as $class) { ?>
-                echo "<option value="hahmon-luokka"><?= $class["name"] ?></option>"
-        <?php } ?>
+            <?php foreach($classes as $class) { ?>
+                    echo "<option value="hahmon-luokka"><?= $class["name"] ?></option>"
+            <?php } ?>
         </select>
 
         <label for="hahmon-nimi">Nimi</label>
