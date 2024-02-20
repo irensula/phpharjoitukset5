@@ -73,9 +73,53 @@ function deleteRace($id) {
 // add new character
 function insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID) {
     $pdo = connect();
-    $sql = "INSERT INTO characters (`name`, `strength`, `dexterity`, `wisdom`, `classID`, `raceID`) VALUES (?, ?, ?, ?, ?, ?)";
+
+    $sql = "INSERT INTO characters (`name`, `strength`, `dexterity`, `wisdom`, `classID`, `raceID`) VALUES (?,?,?,?,?,?);";
+
     $stm = $pdo->prepare($sql);
-    $ok = $stm->execute([$luokka]);
+    $ok = $stm->execute([$name, $strength, $dexterity, $wisdom, $classID, $raceID]);
     return $ok;
 }
-?>
+// show all characters
+function getAllCharacters() {
+    $pdo = connect();
+    $sql = "SELECT * FROM characters";
+    $stm = $pdo->query($sql);
+    $characters = $stm->fetchAll(PDO::FETCH_ASSOC);
+    return $characters;
+}
+// edit character
+function editCharacter($id) {
+    $pdo = connect();
+    $sql = "SELECT characters * `race.name` AS raceName, `class.name` AS className 
+    FROM characters
+    INNER JOIN race ON race.raceID = characters.raceID
+    INNER JOIN class ON class.classID = characters.classID;";
+    $stm = $pdo->prepare($sql);
+    $ok = $stm->execute([$id]);
+    return $ok;
+}
+// SELECT hahmo * 
+// rotu.nimi AS rodunNimi,
+// luokka.nimi AS LuokanNimi 
+// FROM hahmo
+// INNER JOIN rotu ON rotu.rotuID = hahmo.rotuID
+// INNER JOIN luokka ON luokka.kuokkaID = hahmo.luokkaID 
+// update character
+
+function updateCharacter($id) {
+    $pdo = connect();
+    $sql = "UPDATE FROM characters SET `name`='$name', `strength`='$strength', `dexterity`='$dexterity', `wisdom`='$wisdom', `classID`='$classID', `raceID`='$raceID' WHERE characterID=?";
+    $stm = $pdo->prepare($sql);
+    $ok = $stm->execute([$id]);
+    return $ok;
+}
+
+// delete character
+function deleteCharacter($id) {
+    $pdo = connect();
+    $sql = "DELETE FROM characters WHERE characterID=?";
+    $stm = $pdo->prepare($sql);
+    $ok = $stm->execute([$id]);
+    return $ok;
+}

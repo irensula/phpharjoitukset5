@@ -1,7 +1,7 @@
 .delete-link {
     display: inline-block;
 }
-.delete-button {
+.delete-button, .edit-button {
     background: none;
     border: none;
     padding: 0;

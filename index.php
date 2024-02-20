@@ -14,13 +14,25 @@
 
     } else if (isset($_GET["deletedraceid"])) {
         $deleteRace = deleteRace($_GET['deletedraceid']);
+    
+    } else if (isset($_GET['hahmon-rotu'], $_GET['hahmon-luokka'], $_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'])) {
+        $raceID = htmlspecialchars($_GET['hahmon-rotu']);
+        $classID = htmlspecialchars($_GET['hahmon-luokka']);
+        $name = htmlspecialchars($_GET['hahmon-nimi']);
+        $strength = htmlspecialchars($_GET['hahmon-voima']);
+        $dexterity = htmlspecialchars($_GET['hahmon-ketteryys']);
+        $wisdom = htmlspecialchars($_GET['hahmon-viisaus']);
 
-    } else if (isset($_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'])) {
-        $hahmonNimi = htmlspecialchars($_GET['hahmon-nimi']);
-        $hahmonVoima = htmlspecialchars($_GET['hahmon-voima']);
-        $hahmonKetteryys = htmlspecialchars($_GET['hahmon-ketteryys']);
-        $hahmonViisaus = htmlspecialchars($_GET['hahmon-viisaus']);
-        $newCharacter = insertNewCharacter($hahmonNimi, $hahmonVoima, $hahmonKetteryys, $hahmonViisaus);
+        $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID);
+
+    } else if (isset($_GET["editcharacterid"])) {
+        $editCharacter = editCharacter($_GET['editcharacterid']);
+
+    } else if (isset($_GET["updatecharacterid"])) {
+        $updateCharacter = updateCharacter($_GET['updatecharacterid']);
+
+    } else if (isset($_GET["deletedcharacterid"])) {
+        $deletedCharacter = deleteCharacter($_GET['deletedcharacterid']);
     }
 ?>
 
@@ -95,18 +107,18 @@
     <h3>Lisää hahmo</h3>
 
     <form action="index.php" method="get">
-        <label for="rotu">Rotu</label>
+        <label for="hahmon-rotu">Rotu</label>
         
         <select name="hahmon-rotu" id="hahmon-rotu">
             <?php foreach($races as $race) { ?>
-                    echo "<option value="hahmon-rotu"><?= $race["name"] ?></option>"
+                    echo "<option value="<?= $race["raceID"] ?>"><?= $race["name"] ?></option>"
             <?php } ?>
         </select>
 
         <label for="hahmon-luokka">Luokka</label>
         <select name="hahmon-luokka" id="hahmon-luokka">
             <?php foreach($classes as $class) { ?>
-                    echo "<option value="hahmon-luokka"><?= $class["name"] ?></option>"
+                    echo "<option value="<?= $class["classID"] ?>"><?= $class["name"] ?></option>"
             <?php } ?>
         </select>
 
@@ -124,6 +136,36 @@
 
         <input type="submit" value="Lisää">
     </form>
+
+    <div class="characters-container">
+        <div class="character">
+
+            <?php 
+            $characters = getAllCharacters();
+            foreach($characters as $character) { ?>
+
+            <h3 class="name-title"><?= $character["name"] ?></h3>
+            <p>Luokka: <?= $character["classID"] ?></p>
+            <p>Rotu: </p>
+                <ul>
+                    <li>voima: <?= $character["strength"] ?></li>
+                    <li>ketteryys: <?= $character["dexterity"] ?></li>
+                    <li>viisaus: <?= $character["wisdom"] ?></li>
+                </ul>
+
+                <form class="edit-link" action='index.php' method='get'>
+                    <input type='hidden' name='editcharacterid' value='<?= $character["characterID"] ?>'>
+                    <input class="edit-button" type='submit' name='submit' value='Muokkaa'>
+                </form>
+
+                <form class="deleted-link" action='index.php' method='get'>
+                    <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
+                    <input class="delete-button" type='submit' name='submit' value='Poista'>
+                </form>
+
+                <?php } ?>
+        </div>
+    </div>
     
 
 </body>
