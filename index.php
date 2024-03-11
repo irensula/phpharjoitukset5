@@ -28,9 +28,6 @@
     } else if (isset($_GET["editcharacterid"])) {
         $editCharacter = editCharacter($_GET['editcharacterid']);
 
-    } else if (isset($_GET["updatecharacterid"])) {
-        $updateCharacter = updateCharacter($_GET['updatecharacterid']);
-
     } else if (isset($_GET["deletedcharacterid"])) {
         $deletedCharacter = deleteCharacter($_GET['deletedcharacterid']);
     }
@@ -69,7 +66,6 @@
                     <input class="delete-button" type='submit' name='submit' value='Poista'>
 
                 </form>
-
             </li>
             <?php } ?>
     </ul>
@@ -145,15 +141,17 @@
             foreach($characters as $character) { ?>
 
             <h3 class="name-title"><?= $character["name"] ?></h3>
-            <p>Luokka: <?= $character["classID"] ?></p>
-            <p>Rotu: </p>
+            
+            <p>Luokka: <?= $character["className"] ?></p>
+
+            <p>Rotu: <?= $character["raceName"] ?></p>
                 <ul>
                     <li>voima: <?= $character["strength"] ?></li>
                     <li>ketteryys: <?= $character["dexterity"] ?></li>
                     <li>viisaus: <?= $character["wisdom"] ?></li>
                 </ul>
 
-                <form class="edit-link" action='index.php' method='get'>
+                <form class="edit-link" action='editCharacter.php' method='get'>
                     <input type='hidden' name='editcharacterid' value='<?= $character["characterID"] ?>'>
                     <input class="edit-button" type='submit' name='submit' value='Muokkaa'>
                 </form>

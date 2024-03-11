@@ -73,9 +73,7 @@ function deleteRace($id) {
 // add new character
 function insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID) {
     $pdo = connect();
-
     $sql = "INSERT INTO characters (`name`, `strength`, `dexterity`, `wisdom`, `classID`, `raceID`) VALUES (?,?,?,?,?,?);";
-
     $stm = $pdo->prepare($sql);
     $ok = $stm->execute([$name, $strength, $dexterity, $wisdom, $classID, $raceID]);
     return $ok;
@@ -83,18 +81,26 @@ function insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $ra
 // show all characters
 function getAllCharacters() {
     $pdo = connect();
-    $sql = "SELECT * FROM characters";
+    $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, 
+            class.name AS className, 
+            race.name AS raceName 
+            FROM characters 
+            INNER JOIN class ON class.classID = characters.classID 
+            INNER JOIN race ON race.raceID = characters.raceID;";
     $stm = $pdo->query($sql);
     $characters = $stm->fetchAll(PDO::FETCH_ASSOC);
     return $characters;
 }
+
 // edit character
 function editCharacter($id) {
     $pdo = connect();
-    $sql = "SELECT characters * `race.name` AS raceName, `class.name` AS className 
-    FROM characters
-    INNER JOIN race ON race.raceID = characters.raceID
-    INNER JOIN class ON class.classID = characters.classID;";
+    $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, 
+            class.name AS className, 
+            race.name AS raceName 
+            FROM characters 
+            INNER JOIN class ON class.classID = characters.classID 
+            INNER JOIN race ON race.raceID = characters.raceID WHERE characterID=?;";
     $stm = $pdo->prepare($sql);
     $ok = $stm->execute([$id]);
     return $ok;
@@ -107,12 +113,13 @@ function editCharacter($id) {
 // INNER JOIN luokka ON luokka.kuokkaID = hahmo.luokkaID 
 // update character
 
-function updateCharacter($id) {
+
+function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $id) {
     $pdo = connect();
-    $sql = "UPDATE FROM characters SET `name`='$name', `strength`='$strength', `dexterity`='$dexterity', `wisdom`='$wisdom', `classID`='$classID', `raceID`='$raceID' WHERE characterID=?";
+    $data = [$name, $strength, $dexterity, $wisdom, $classID, $raceID, $id];
+    $sql = "UPDATE characters SET name = ?, strength = ?, dexterity = ?, wisdom = ?, classID = ?, raceID = ? WHERE characterID = ?";
     $stm = $pdo->prepare($sql);
-    $ok = $stm->execute([$id]);
-    return $ok;
+    return $stm->execute($data);
 }
 
 // delete character
