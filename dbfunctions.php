@@ -92,6 +92,16 @@ function getAllCharacters() {
     return $characters;
 }
 
+// get character by id
+function getCharacterById($characterID){
+    $pdo = connect();
+    $sql = "SELECT * FROM characters WHERE characterID=?";
+    $stm= $pdo->prepare($sql);
+    $stm->execute([$characterID]);
+    $all = $stm->fetch(PDO::FETCH_ASSOC);
+    return $all;
+}
+
 // edit character
 function editCharacter($id) {
     $pdo = connect();
@@ -105,18 +115,10 @@ function editCharacter($id) {
     $ok = $stm->execute([$id]);
     return $ok;
 }
-// SELECT hahmo * 
-// rotu.nimi AS rodunNimi,
-// luokka.nimi AS LuokanNimi 
-// FROM hahmo
-// INNER JOIN rotu ON rotu.rotuID = hahmo.rotuID
-// INNER JOIN luokka ON luokka.kuokkaID = hahmo.luokkaID 
-// update character
 
-
-function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $id) {
+function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID) {
     $pdo = connect();
-    $data = [$name, $strength, $dexterity, $wisdom, $classID, $raceID, $id];
+    $data = [$name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID];
     $sql = "UPDATE characters SET name = ?, strength = ?, dexterity = ?, wisdom = ?, classID = ?, raceID = ? WHERE characterID = ?";
     $stm = $pdo->prepare($sql);
     return $stm->execute($data);
