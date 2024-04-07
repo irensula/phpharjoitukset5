@@ -122,7 +122,7 @@
         </ul>
     </section>
     <!-- HAHMOT -->
-    <section>
+    <section class="characters-section">
         <h2>Hahmot</h2>
         <h3>Lisää hahmo</h3>
 
@@ -163,7 +163,7 @@
                 <?php 
                 $characters = getAllCharacters();
                 foreach($characters as $character) { ?>
-
+                <div class="character-card">
                 <h3 class="name-title"><?= $character["name"] ?></h3>
                 
                 <p>Luokka: <?= $character["className"] ?></p>
@@ -185,7 +185,7 @@
                         <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
                         <input class="delete-button" type='submit' name='submit' value='Poista'>
                     </form>
-
+                    </div>
                     <?php } ?>
             </div>
         </div>

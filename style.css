@@ -3,13 +3,13 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #fff;
-    padding: 50px 200px;
+    padding: 100px 10% 50px 10%;
 }
 h1 {
   font-family: "MedievalSharp", cursive;
   font-size: 75px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
 }
 h2, h3 {
     font-family: "Crimson Text", serif;
@@ -38,15 +38,28 @@ h3 {
 .delete-button:hover, .edit-button:hover {
     color: #155a32;
 }
-section {
+section, .characters-section {
     font-size: 20px;
-    background: linear-gradient(180deg, rgba(20,20,20,1) 0%, rgba(20,20,20,1) 60%, rgba(20,20,20,0.4) 100%);
+    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 60%, rgba(20,20,20,0.4) 100%);
     width: 35%;
     padding: 40px 50px;
     margin-bottom: 50px;
     -webkit-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     -moz-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 50px;
+}
+.characters-section {
+  width: 100%;
+  background: linear-gradient(150deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.6) 60%, rgba(20,20,20,0.4) 100%);
+}
+.character {
+  display: grid;
+}
+.character-card {
+  width: 300px;
 }
 .text-input, select {
     height: 30px;
