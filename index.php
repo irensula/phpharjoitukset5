@@ -170,9 +170,9 @@
 
                 <p>Rotu: <?= $character["raceName"] ?></p>
                     <ul>
-                        <li>voima: <?= $character["strength"] ?></li>
-                        <li>ketteryys: <?= $character["dexterity"] ?></li>
-                        <li>viisaus: <?= $character["wisdom"] ?></li>
+                        <li>Voima: <?= $character["strength"] ?></li>
+                        <li>Ketteryys: <?= $character["dexterity"] ?></li>
+                        <li>Viisaus: <?= $character["wisdom"] ?></li>
                     </ul>
 
                     <form class="edit-link" action='/editCharacter.php' method='get'>
