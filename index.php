@@ -65,7 +65,8 @@
 <body>
     <h1>HAHMOT</h1>
     <!-- LUOKAT -->
-    <section>
+    <section class="class-race-section">
+    <section class="class-section">
         <h2>Luokat</h2>
         <h3>Lisää luokka</h3>
 
@@ -81,7 +82,7 @@
             <?php
                 $classes = getAllClasses();
                 foreach($classes as $class) {
-                    echo "<li>" . $class["name"] ?>  
+                    echo "<li>" . $class["name"] ?>
                     <form class="delete-link" action='index.php' method='get'>
                     
                         <input type='hidden' name='deletedclassid' value='<?= $class["classID"] ?>'>
@@ -93,7 +94,7 @@
         </ul>
     </section>
     <!-- RODUT -->
-    <section>
+    <section class="race-section">
         <h2>Rodut</h2>
         <h3>Lisää rotu</h3>
 
@@ -120,6 +121,7 @@
                 </li>
                 <?php } ?>
         </ul>
+    </section>
     </section>
     <!-- HAHMOT -->
     <section class="characters-section">
@@ -158,9 +160,7 @@
         </form>
 
         <div class="characters-container">
-            <div class="character">
-
-                <?php 
+            <?php 
                 $characters = getAllCharacters();
                 foreach($characters as $character) { ?>
                 <div class="character-card">
@@ -187,7 +187,6 @@
                     </form>
                     </div>
                     <?php } ?>
-            </div>
         </div>
     </section>
 </body>

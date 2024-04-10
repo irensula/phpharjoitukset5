@@ -3,13 +3,13 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #fff;
-    padding: 100px 50px 100px 50px;
+    padding: 100px 50px;
 }
 h1 {
   font-family: "MedievalSharp", cursive;
   font-size: 75px;
   text-align: center;
-  margin-bottom: 100px;
+  margin: 50px 0px 100px 0px;
 }
 h2, h3 {
     font-family: "Crimson Text", serif;
@@ -31,14 +31,18 @@ h3 {
     text-decoration: underline;
     cursor: pointer;
     font-size: 15px;
+    display: inline-block;
 }
 .delete-button:hover, .edit-button:hover {
     color: #155a32;
 }
-section, .characters-section {
+.class-race-section {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.class-section, .race-section {
     font-size: 20px;
     background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 60%, rgba(20,20,20,0.4) 100%);
-    width: 400px;
     padding: 40px 50px;
     margin: 50px;
     -webkit-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
@@ -48,15 +52,23 @@ section, .characters-section {
     vertical-align: top;
 }
 .characters-section {
-  width: 1220px;
-  background: linear-gradient(150deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.6) 60%, rgba(20,20,20,0.4) 100%);
+    font-size: 20px;
+    background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 70%, rgba(20,20,20,0.6) 30%, rgba(20,20,20,0.4) 100%);
+    padding: 5%;
+    width: 82.5%;
+    margin: 50px;
+    -webkit-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
+    -moz-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
+    box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
+    display: inline-block;
+    vertical-align: top; 
+  
 }
-.character {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+.characters-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 }
 .character-card {
-  width: 250px;
   margin: 20px 20px 20px 0px;
   border-radius: 5px;
   padding: 20px;
@@ -74,6 +86,7 @@ p {
 li {
   margin-bottom: 10px;
 }
+span {display: inline-block;}
 .name-title {
   text-transform: uppercase;
   font-weight: 400px;
@@ -128,4 +141,31 @@ li {
 
 .button-68:hover {
   box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
+}
+@media only screen and (max-width: 1200px) {
+  .characters-container {
+    grid-template-columns: auto auto auto;
+  }
+  .class-race-section {
+    grid-template-columns: auto;
+  }
+  .class-section, .race-section {
+    margin: 50px 20%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .characters-container {
+    grid-template-columns: auto auto;
+  }
+  .class-section, .race-section {
+    margin: 50px 10%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .characters-container {
+    grid-template-columns: auto;
+  }
+  .class-section, .race-section {
+    margin: 30px;
+  }
 }
