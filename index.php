@@ -30,12 +30,12 @@
         $characterToUpdate = getCharacterById($characterID);
         
         if($characterToUpdate){
-            $raceID = $characterToUpdate['hahmon-rotu'];
-            $classID = $characterToUpdate['hahmon-luokka'];
-            $name = $characterToUpdate['hahmon-nimi'];
-            $strength = $characterToUpdate['hahmon-voima'];
-            $dexterity = $characterToUpdate['hahmon-ketteryys'];
-            $wisdom = $characterToUpdate['hahmon-viisaus'];
+            $raceID = $characterToUpdate['raceID'];
+            $classID = $characterToUpdate['classID'];
+            $name = $characterToUpdate['name'];
+            $strength = $characterToUpdate['strength'];
+            $dexterity = $characterToUpdate['dexterity'];
+            $wisdom = $characterToUpdate['wisdom'];
             $characterID = $characterToUpdate['characterID'];
             require "/editCharacter.php";
     } 
@@ -60,7 +60,7 @@
     <!-- css -->
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
-    <title>Document</title>
+    <title>Hahmot</title>
 </head>
 <body>
     <h1>HAHMOT</h1>
@@ -162,7 +162,8 @@
         <div class="characters-container">
             <?php 
                 $characters = getAllCharacters();
-                foreach($characters as $character) { ?>
+                foreach($characters as $character) { 
+                    $characterID = $character['characterID'];?>
                 <div class="character-card">
                 <h3 class="name-title"><?= $character["name"] ?></h3>
                 
@@ -179,7 +180,8 @@
                         <input type='hidden' name='characterID' value='<?= $character["characterID"] ?>'>
                         <button class="delete-button" type="submit">Muokkaa</button>
                     </form>
-                    <!-- <a href='/editCharacter.php?id=<?=$character["characterID"]?>'>Päivitä</a> -->
+                    <!-- ?characterID=$characterID -->
+                    <a href='/editCharacter.php?characterID=<?=$characterID?>'>Päivitä</a>
 
                     <form class="deleted-link" action='index.php' method='get'>
                         <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
@@ -189,5 +191,15 @@
                     <?php } ?>
         </div>
     </section>
+    <?php
+    $characterToUpdate = getCharacterById("23"); 
+    echo $characterToUpdate["name"] . "<br>";
+    echo $characterToUpdate["characterID"] . "<br>";
+    echo $characterToUpdate["strength"] . "<br>";
+    echo $characterToUpdate["dexterity"] . "<br>";
+    echo $characterToUpdate["wisdom"] . "<br>";
+    echo $characterToUpdate["raceID"] . "<br>";
+    echo $characterToUpdate["classID"] . "<br>";
+    ?>
 </body>
 </html>

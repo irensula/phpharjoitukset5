@@ -1,6 +1,9 @@
 body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bg-image.jpg');
+    height: 100%;
+    background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
     background-attachment: fixed;
     color: #fff;
     padding: 100px 50px;
@@ -142,15 +145,13 @@ span {display: inline-block;}
 .button-68:hover {
   box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
 }
-@media only screen and (max-width: 1200px) {
-  .characters-container {
-    grid-template-columns: auto auto auto;
+
+@media only screen and (max-width: 1960px) {
+  .class-section{
+    margin: 50px 10% 50px 20%;
   }
-  .class-race-section {
-    grid-template-columns: auto;
-  }
-  .class-section, .race-section {
-    margin: 50px 20%;
+  .race-section {
+    margin: 50px 20% 50px 10%;
   }
 }
 @media only screen and (max-width: 900px) {

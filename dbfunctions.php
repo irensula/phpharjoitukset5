@@ -101,20 +101,19 @@ function getCharacterById($characterID){
     $all = $stm->fetch(PDO::FETCH_ASSOC);
     return $all;
 }
-
 // edit character
-function editCharacter($id) {
-    $pdo = connect();
-    $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, 
-            class.name AS className, 
-            race.name AS raceName 
-            FROM characters 
-            INNER JOIN class ON class.classID = characters.classID 
-            INNER JOIN race ON race.raceID = characters.raceID WHERE characterID=?;";
-    $stm = $pdo->prepare($sql);
-    $ok = $stm->execute([$id]);
-    return $ok;
-}
+// function editCharacter($id) {
+//     $pdo = connect();
+//     $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, 
+//             class.name AS className, 
+//             race.name AS raceName 
+//             FROM characters 
+//             INNER JOIN class ON class.classID = characters.classID 
+//             INNER JOIN race ON race.raceID = characters.raceID WHERE characterID=?;";
+//     $stm = $pdo->prepare($sql);
+//     $ok = $stm->execute([$id]);
+//     return $ok;
+// }
 
 function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID) {
     $pdo = connect();
