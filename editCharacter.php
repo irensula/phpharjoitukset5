@@ -24,6 +24,7 @@
         $classID = htmlspecialchars($_POST['classID']);
         $id = htmlspecialchars($_POST['id']);
         updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $id); 
+        header('Location: index.php');
     }
 ?>
 
