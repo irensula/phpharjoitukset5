@@ -25,9 +25,9 @@
 
         $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID);
 
-    } else if (isset($_GET["characterID"])) {
-        $characterID = htmlspecialchars($_GET['characterID']);
-        $characterToUpdate = getCharacterById($characterID);
+    } else if (isset($_GET["id"])) {
+        $id = htmlspecialchars($_GET['id']);
+        $characterToUpdate = getCharacterById($id);
         
         if($characterToUpdate){
             $raceID = $characterToUpdate['raceID'];
@@ -36,10 +36,9 @@
             $strength = $characterToUpdate['strength'];
             $dexterity = $characterToUpdate['dexterity'];
             $wisdom = $characterToUpdate['wisdom'];
-            $characterID = $characterToUpdate['characterID'];
+            $id = $characterToUpdate['characterID'];
             require "/editCharacter.php";
-    } 
-
+        } 
     } else if (isset($_GET["deletedcharacterid"])) {
         $deletedCharacter = deleteCharacter($_GET['deletedcharacterid']);
     }
@@ -66,62 +65,62 @@
     <h1>HAHMOT</h1>
     <!-- LUOKAT -->
     <section class="class-race-section">
-    <section class="class-section">
-        <h2>Luokat</h2>
-        <h3>Lisää luokka</h3>
+        <section class="class-section">
+            <h2>Luokat</h2>
+            <h3>Lisää luokka</h3>
 
-        <form action="index.php" method="get">
-            <label for="luokka">Luokan nimi</label>
-            <input class="text-input" type="text" name="luokka">
-            <input type='submit' class="button-68" value='Lisää'>
-        </form>
+            <form action="index.php" method="get">
+                <label for="luokka">Luokan nimi</label>
+                <input class="text-input" type="text" name="luokka">
+                <input type='submit' class="button-68" value='Lisää'>
+            </form>
 
-        <h3>Luokat</h3>
+            <h3>Luokat</h3>
 
-        <ul>
-            <?php
-                $classes = getAllClasses();
-                foreach($classes as $class) {
-                    echo "<li>" . $class["name"] ?>
-                    <form class="delete-link" action='index.php' method='get'>
-                    
-                        <input type='hidden' name='deletedclassid' value='<?= $class["classID"] ?>'>
-                        <input class="delete-button" type='submit' name='submit' value='Poista'>
+            <ul>
+                <?php
+                    $classes = getAllClasses();
+                    foreach($classes as $class) {
+                        echo "<li>" . $class["name"] ?>
+                        <form class="delete-link" action='index.php' method='get'>
+                        
+                            <input type='hidden' name='deletedclassid' value='<?= $class["classID"] ?>'>
+                            <input class="delete-button" type='submit' name='submit' value='Poista'>
 
-                    </form>
-                </li>
-                <?php } ?>
-        </ul>
-    </section>
-    <!-- RODUT -->
-    <section class="race-section">
-        <h2>Rodut</h2>
-        <h3>Lisää rotu</h3>
+                        </form>
+                    </li>
+                    <?php } ?>
+            </ul>
+        </section>
+        <!-- RODUT -->
+        <section class="race-section">
+            <h2>Rodut</h2>
+            <h3>Lisää rotu</h3>
 
-        <form action="index.php" method="get">
-            <label for="rotu">Luokan nimi</label>
-            <input class="text-input" type="text" name="rotu">
-            <input class="button-68" type='submit' value='Lisää'>
-        </form>
+            <form action="index.php" method="get">
+                <label for="rotu">Luokan nimi</label>
+                <input class="text-input" type="text" name="rotu">
+                <input class="button-68" type='submit' value='Lisää'>
+            </form>
 
-        <h3>Rodut</h3>
+            <h3>Rodut</h3>
 
-        <ul>
-            <?php
-                $races = getAllRaces();
-                foreach($races as $race) {
-                    echo "<li>" . $race["name"] ?>  
-                    <form class="delete-link" action='index.php' method='get'>
+            <ul>
+                <?php
+                    $races = getAllRaces();
+                    foreach($races as $race) {
+                        echo "<li>" . $race["name"] ?>  
+                        <form class="delete-link" action='index.php' method='get'>
 
-                        <input type='hidden' name='deletedraceid' value='<?= $race["raceID"] ?>'>
-                        <input class="delete-button" type='submit' name='submit' value='Poista'>
+                            <input type='hidden' name='deletedraceid' value='<?= $race["raceID"] ?>'>
+                            <input class="delete-button" type='submit' name='submit' value='Poista'>
 
-                    </form>
+                        </form>
 
-                </li>
-                <?php } ?>
-        </ul>
-    </section>
+                    </li>
+                    <?php } ?>
+            </ul>
+        </section>
     </section>
     <!-- HAHMOT -->
     <section class="characters-section">
@@ -175,31 +174,17 @@
                         <li>Ketteryys: <?= $character["dexterity"] ?></li>
                         <li>Viisaus: <?= $character["wisdom"] ?></li>
                     </ul>
-
-                    <form class="edit-link" action='/editCharacter.php' method='get'>
-                        <input type='hidden' name='characterID' value='<?= $character["characterID"] ?>'>
-                        <button class="delete-button" type="submit">Muokkaa</button>
-                    </form>
-                    <!-- ?characterID=$characterID -->
-                    <a href='/editCharacter.php?characterID=<?=$characterID?>'>Päivitä</a>
+                    
+                    <a class="edit-link" href='/editCharacter.php?characterID=<?=$characterID?>'>Päivitä</a>
 
                     <form class="deleted-link" action='index.php' method='get'>
                         <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
                         <input class="delete-button" type='submit' name='submit' value='Poista'>
                     </form>
+
                     </div>
                     <?php } ?>
         </div>
     </section>
-    <?php
-    $characterToUpdate = getCharacterById("23"); 
-    echo $characterToUpdate["name"] . "<br>";
-    echo $characterToUpdate["characterID"] . "<br>";
-    echo $characterToUpdate["strength"] . "<br>";
-    echo $characterToUpdate["dexterity"] . "<br>";
-    echo $characterToUpdate["wisdom"] . "<br>";
-    echo $characterToUpdate["raceID"] . "<br>";
-    echo $characterToUpdate["classID"] . "<br>";
-    ?>
 </body>
 </html>

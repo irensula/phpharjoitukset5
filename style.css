@@ -27,19 +27,21 @@ h3 {
     margin-bottom: 20px;
     font-weight: 900;
 }
-.delete-button, .edit-button {
+.delete-button, .edit-button, .edit-link {
     background: none;
     border: none;
     color: #1e8449;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 15px;
     display: inline-block;
+    font-size: 18px;
 }
 .delete-button:hover, .edit-button:hover {
     color: #155a32;
 }
 .class-race-section {
+  width: 80%;
+  margin: 50px 10%;
   display: grid;
   grid-template-columns: auto auto;
 }
@@ -47,7 +49,6 @@ h3 {
     font-size: 20px;
     background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 60%, rgba(20,20,20,0.4) 100%);
     padding: 40px 50px;
-    margin: 50px;
     -webkit-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     -moz-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
@@ -57,9 +58,9 @@ h3 {
 .characters-section {
     font-size: 20px;
     background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 70%, rgba(20,20,20,0.6) 30%, rgba(20,20,20,0.4) 100%);
+    width: 70%;
+    margin: 50px 10%;
     padding: 5%;
-    width: 82.5%;
-    margin: 50px;
     -webkit-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     -moz-box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
     box-shadow: 4px 10px 15px 0px rgba(20,20,20,0.4);
@@ -97,6 +98,23 @@ span {display: inline-block;}
 }
 .edit-link, .deleted-link {
   display: inline-block;
+}
+.edit-link {
+  font-size: 20px;
+}
+/* edit character page */
+.edit-character-container {
+  width: 30%;
+  margin: 0 auto;
+  background: linear-gradient(160deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8) 60%, rgba(20,20,20,0.4) 100%);
+  padding: 50px 60px;
+  font-size: 20px;
+}
+.title {
+  font-family: "Crimson Text", serif;
+  text-transform: uppercase;
+  font-size: 50px;
+  margin-bottom: 30px;
 }
 /* button */
 .button-68 {

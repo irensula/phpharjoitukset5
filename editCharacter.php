@@ -1,62 +1,90 @@
 <?php
     require "./dbfunctions.php";
-    if(isset($_GET["characterID"])){
-        $characterID = $_GET["characterID"];
-        $character = getCharacterById($characterID);
-         
-        echo $character["name"] . "<br>";
-    }
-    else if (isset($_POST['hahmon-rotu'], $_POST['hahmon-luokka'], $_POST['hahmon-nimi'], $_POST['hahmon-voima'], $_POST['hahmon-ketteryys'], $_POST['hahmon-viisaus'], $_POST['characterID'])) { 
-       
-        $raceID = htmlspecialchars($_POST['hahmon-rotu']);
-        $classID = htmlspecialchars($_POST['hahmon-luokka']);
-        $name = htmlspecialchars($_POST['hahmon-nimi']);
-        $strength = htmlspecialchars($_POST['hahmon-voima']);
-        $dexterity = htmlspecialchars($_POST['hahmon-ketteryys']);
-        $wisdom = htmlspecialchars($_POST['hahmon-viisaus']);
-        $characterID = htmlspecialchars($_POST['characterID']);
-        updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID);
-        echo "$name";
+    if (isset($_GET["characterID"])) {
+        $id = htmlspecialchars($_GET['characterID']);
+        $characterToUpdate = getCharacterById($id);
+        
+        if($characterToUpdate){
+            $raceID = $characterToUpdate['raceID'];
+            $classID = $characterToUpdate['classID'];
+            $name = $characterToUpdate['name'];
+            $strength = $characterToUpdate['strength'];
+            $dexterity = $characterToUpdate['dexterity'];
+            $wisdom = $characterToUpdate['wisdom'];
+            $id = $characterToUpdate['characterID'];
+        } 
+    } 
+    if (isset($_POST["updateCharacterData"])){
+
+        $name = htmlspecialchars($_POST['name']);
+        $strength = htmlspecialchars($_POST['strength']);
+        $dexterity = htmlspecialchars($_POST['dexterity']);
+        $wisdom = htmlspecialchars($_POST['wisdom']);
+        $raceID = htmlspecialchars($_POST['raceID']);
+        $classID = htmlspecialchars($_POST['classID']);
+        $id = htmlspecialchars($_POST['id']);
+        updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $id); 
     }
 ?>
-<?php echo $character["strength"]; ?>
+
 <!-- edit form -->
-<form action="/editCharacter.php" method="post">
-    <label for="hahmon-rotu">Rotu</label>
-    <select name="hahmon-rotu" id="hahmon-rotu">
-        <?php
-            $races = getAllRaces(); 
-            foreach($races as $race) { ?>
-                echo "<option value="<?= $race["raceID"] ?>"><?= $race["name"] ?></option>"
-        <?php } ?>
-    </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Eagle+Lake&family=MedievalSharp&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
+    <title>Muokka hahmo</title>
+</head>
+<body>
+    <div class="edit-character-container">
+        <h2 class="title">Muokka hahmo</h2>
+        <form action="/editCharacter.php" method="post">
+            <label for="raceID">Rotu</label>
+            <select name="raceID" id="raceID">
+                <?php
+                    $races = getAllRaces(); 
+                    foreach($races as $race) { ?>
+                        echo "<option value="<?= $race["raceID"] ?>"><?= $race["name"] ?></option>"
+                <?php } ?>
+            </select><br>
 
-    <label for="hahmon-luokka">Luokka</label>
-    <select name="hahmon-luokka" id="hahmon-luokka">
-        <?php
-        $classes = getAllClasses(); 
-        foreach($classes as $class) { ?>
-                echo "<option value="<?= $class["classID"] ?>"><?= $class["name"] ?></option>"
-        <?php } ?>
-    </select>
-   
-    <label for="hahmon-nimi">Nimi</label>
-    <input type="text" name="hahmon-nimi" id="hahmon-nimi" >
+            <label for="classID">Luokka</label>
+            <select name="classID" id="classID">
+                <?php
+                $classes = getAllClasses(); 
+                foreach($classes as $class) { ?>
+                        echo "<option value="<?= $class["classID"] ?>"><?= $class["name"] ?></option>"
+                <?php } ?>
+            </select><br>
+        
+            <label for="name">Nimi</label>
+            <input class="text-input" type="text" name="name" id="name" value=<?=$name?>><br>
 
-    <label for="hahmon-voima">Voima</label>
-    <input type="number" name="hahmon-voima" id="hahmon-voima" min="1" max="10">
+            <label for="strength">Voima</label>
+            <input class="text-input"type="number" name="strength" id="strength" min="1" max="10" value=<?=$strength?>><br>
 
-    <label for="hahmon-ketteryys">Ketteryys</label>
-    <input type="number" name="hahmon-ketteryys" id="hahmon-ketteryys" min="1" max="10" >
+            <label for="dexterity">Ketteryys</label>
+            <input class="text-input"type="number" name="dexterity" id="dexterity" min="1" max="10" value=<?=$dexterity?>><br>
 
-    <label for="hahmon-viisaus">Viisaus</label>
-    <input type="number" name="hahmon-viisaus" id="hahmon-viisaus" min="1" max="10" >
-    
-    <input type="submit" name="update-character-data" value="Päivittää">
+            <label for="wisdom">Viisaus</label>
+            <input class="text-input"type="number" name="wisdom" id="wisdom" min="1" max="10" value=<?=$wisdom?>><br>
 
-</form>
+            
+            <input type="hidden" name="id" id="id" min="1" max="10" value=<?=$id?>><br>
+            
+            <input class="button-68" type="submit" name="updateCharacterData" value="Päivittää">
 
-<?php 
-// $update = updateCharacter('Johnathan', 9, 4, 3, 2, 2, 23); 
-// echo $update;
-?>
+        </form>
+                </div>
+</body>
+</html>
