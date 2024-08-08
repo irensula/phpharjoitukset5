@@ -11,6 +11,7 @@
             $strength = $characterToUpdate['strength'];
             $dexterity = $characterToUpdate['dexterity'];
             $wisdom = $characterToUpdate['wisdom'];
+            $image = $characterToUpdate['image'];
             $id = $characterToUpdate['characterID'];
         } 
     } 
@@ -22,8 +23,9 @@
         $wisdom = htmlspecialchars($_POST['wisdom']);
         $raceID = htmlspecialchars($_POST['raceID']);
         $classID = htmlspecialchars($_POST['classID']);
+        $image = htmlspecialchars($_POST['image']);
         $id = htmlspecialchars($_POST['id']);
-        updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $id); 
+        updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $image, $id);
         header('Location: index.php');
     }
 ?>
@@ -80,6 +82,8 @@
             <label for="wisdom">Viisaus</label>
             <input class="text-input"type="number" name="wisdom" id="wisdom" min="1" max="10" value=<?=$wisdom?>><br>
 
+            <label for="image">Kuva</label>
+            <input class="text-input" type="text" name="image" id="image" value=<?=$image?>><br>
             
             <input type="hidden" name="id" id="id" min="1" max="10" value=<?=$id?>><br>
             

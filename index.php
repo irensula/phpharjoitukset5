@@ -15,15 +15,16 @@
     } else if (isset($_GET["deletedraceid"])) {
         $deleteRace = deleteRace($_GET['deletedraceid']);
     
-    } else if (isset($_GET['hahmon-rotu'], $_GET['hahmon-luokka'], $_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'])) {
+    } else if (isset($_GET['hahmon-rotu'], $_GET['hahmon-luokka'], $_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'], $_GET['hahmon-kuva'])) {
         $raceID = htmlspecialchars($_GET['hahmon-rotu']);
         $classID = htmlspecialchars($_GET['hahmon-luokka']);
         $name = htmlspecialchars($_GET['hahmon-nimi']);
         $strength = htmlspecialchars($_GET['hahmon-voima']);
         $dexterity = htmlspecialchars($_GET['hahmon-ketteryys']);
         $wisdom = htmlspecialchars($_GET['hahmon-viisaus']);
+        $image = htmlspecialchars($_GET['hahmon-kuva']);
 
-        $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID);
+        $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $image);
 
     } else if (isset($_GET["id"])) {
         $id = htmlspecialchars($_GET['id']);
@@ -36,6 +37,7 @@
             $strength = $characterToUpdate['strength'];
             $dexterity = $characterToUpdate['dexterity'];
             $wisdom = $characterToUpdate['wisdom'];
+            $image = $characterToUpdate['image'];
             $id = $characterToUpdate['characterID'];
             require "/editCharacter.php";
         } 
@@ -155,6 +157,9 @@
             <label for="hahmon-viisaus">Viisaus</label>
             <input class="text-input" type="number" name="hahmon-viisaus" id="hahmon-viisaus" min="1" max="10"><br>
 
+            <label for="hahmon-kuva">Kuva</label>
+            <input class="text-input" type="text" name="hahmon-kuva" id="hahmon-kuva"><br>
+
             <input type="submit" class="button-68" value="Lisää">
         </form>
 
@@ -166,24 +171,26 @@
                 <div class="character-card">
                 <h3 class="name-title"><?= $character["name"] ?></h3>
                 
+                <div class="image-container"><img class="character-image" src=<?= $character["image"] ?>></div>
+
                 <p>Luokka: <?= $character["className"] ?></p>
 
                 <p>Rotu: <?= $character["raceName"] ?></p>
-                    <ul>
-                        <li>Voima: <?= $character["strength"] ?></li>
-                        <li>Ketteryys: <?= $character["dexterity"] ?></li>
-                        <li>Viisaus: <?= $character["wisdom"] ?></li>
-                    </ul>
-                    
-                    <a class="edit-link" href='/editCharacter.php?characterID=<?=$characterID?>'>Päivitä</a>
+                <ul>
+                    <li>Voima: <?= $character["strength"] ?></li>
+                    <li>Ketteryys: <?= $character["dexterity"] ?></li>
+                    <li>Viisaus: <?= $character["wisdom"] ?></li>
+                </ul>
+                
+                <a class="edit-link" href='/editCharacter.php?characterID=<?=$characterID?>'>Päivitä</a>
 
-                    <form class="deleted-link" action='index.php' method='get'>
-                        <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
-                        <input class="delete-button" type='submit' name='submit' value='Poista'>
-                    </form>
+                <form class="deleted-link" action='index.php' method='get'>
+                    <input type='hidden' name='deletedcharacterid' value='<?= $character["characterID"] ?>'>
+                    <input class="delete-button" type='submit' name='submit' value='Poista'>
+                </form>
 
-                    </div>
-                    <?php } ?>
+                </div>
+                <?php } ?>
         </div>
     </section>
 </body>

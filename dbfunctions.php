@@ -71,17 +71,17 @@ function deleteRace($id) {
     return $ok;
 }
 // add new character
-function insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID) {
+function insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $image) {
     $pdo = connect();
-    $sql = "INSERT INTO characters (`name`, `strength`, `dexterity`, `wisdom`, `classID`, `raceID`) VALUES (?,?,?,?,?,?);";
+    $sql = "INSERT INTO characters (`name`, `strength`, `dexterity`, `wisdom`, `classID`, `raceID`, `image`) VALUES (?,?,?,?,?,?,?);";
     $stm = $pdo->prepare($sql);
-    $ok = $stm->execute([$name, $strength, $dexterity, $wisdom, $classID, $raceID]);
+    $ok = $stm->execute([$name, $strength, $dexterity, $wisdom, $classID, $raceID, $image]);
     return $ok;
 }
 // show all characters
 function getAllCharacters() {
     $pdo = connect();
-    $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, 
+    $sql = "SELECT characterID, characters.name, strength, wisdom, dexterity, characters.classID, characters.raceID, characters.image,
             class.name AS className, 
             race.name AS raceName 
             FROM characters 
@@ -102,10 +102,10 @@ function getCharacterById($characterID){
     return $all;
 }
 
-function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID) {
+function updateCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID, $image) {
     $pdo = connect();
-    $data = [$name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID];
-    $sql = "UPDATE characters SET name = ?, strength = ?, dexterity = ?, wisdom = ?, classID = ?, raceID = ? WHERE characterID = ?";
+    $data = [$name, $strength, $dexterity, $wisdom, $classID, $raceID, $characterID, $image];
+    $sql = "UPDATE characters SET name = ?, strength = ?, dexterity = ?, wisdom = ?, classID = ?, raceID = ?, image = ? WHERE characterID = ?";
     $stm = $pdo->prepare($sql);
     return $stm->execute($data);
 }

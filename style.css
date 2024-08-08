@@ -78,6 +78,18 @@ h3 {
   padding: 20px;
   background-color: rgba(20,20,20,1);
 }
+.image-container {
+  vertical-align: top;
+  text-align:center; 
+  position: relative;
+  margin: 1.2em auto;
+}
+.character-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  overflow: hidden;
+}
 .text-input, select {
     height: 30px;
     border-radius: 8px;
