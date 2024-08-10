@@ -4,7 +4,7 @@
     if(isset($_GET['luokka'])) {
         $luokka = htmlspecialchars($_GET['luokka']);
         $luokat = insertNewClass($luokka);  
-     
+    
     } else if (isset($_GET["deletedclassid"])) {
         $ok = deleteClass($_GET['deletedclassid']);
 
@@ -15,14 +15,14 @@
     } else if (isset($_GET["deletedraceid"])) {
         $deleteRace = deleteRace($_GET['deletedraceid']);
     
-    } else if (isset($_GET['hahmon-rotu'], $_GET['hahmon-luokka'], $_GET['hahmon-nimi'], $_GET['hahmon-voima'], $_GET['hahmon-ketteryys'], $_GET['hahmon-viisaus'], $_GET['hahmon-kuva'])) {
-        $raceID = htmlspecialchars($_GET['hahmon-rotu']);
-        $classID = htmlspecialchars($_GET['hahmon-luokka']);
-        $name = htmlspecialchars($_GET['hahmon-nimi']);
-        $strength = htmlspecialchars($_GET['hahmon-voima']);
-        $dexterity = htmlspecialchars($_GET['hahmon-ketteryys']);
-        $wisdom = htmlspecialchars($_GET['hahmon-viisaus']);
-        $image = htmlspecialchars($_GET['hahmon-kuva']);
+    } else if (isset($_POST['hahmon-rotu'], $_POST['hahmon-luokka'], $_POST['hahmon-nimi'], $_POST['hahmon-voima'], $_POST['hahmon-ketteryys'], $_POST['hahmon-viisaus'], $_POST['hahmon-kuva'])) {
+        $raceID = htmlspecialchars($_POST['hahmon-rotu']);
+        $classID = htmlspecialchars($_POST['hahmon-luokka']);
+        $name = htmlspecialchars($_POST['hahmon-nimi']);
+        $strength = htmlspecialchars($_POST['hahmon-voima']);
+        $dexterity = htmlspecialchars($_POST['hahmon-ketteryys']);
+        $wisdom = htmlspecialchars($_POST['hahmon-viisaus']);
+        $image = htmlspecialchars($_POST['hahmon-kuva']);
 
         $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $image);
 
@@ -61,6 +61,9 @@
     <!-- css -->
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+
     <title>Hahmot</title>
 </head>
 <body>
@@ -128,8 +131,8 @@
     <section class="characters-section">
         <h2>Hahmot</h2>
         <h3>Lisää hahmo</h3>
-
-        <form action="index.php" method="get">
+                        
+        <form action="index.php" method="post">
             <label for="hahmon-rotu">Rotu</label>
             
             <select name="hahmon-rotu" id="hahmon-rotu">
@@ -146,22 +149,52 @@
             </select><br>
 
             <label for="hahmon-nimi">Nimi</label>
-            <input class="text-input" type="text" name="hahmon-nimi" id="hahmon-nimi"><br>
+            <input class="text-input" type="text" name="hahmon-nimi" id="hahmon-nimi" required><br>
 
             <label for="hahmon-voima">Voima</label>
-            <input class="text-input" type="number" name="hahmon-voima" id="hahmon-voima" min="1" max="10"><br>
+            <input class="text-input" type="text" name="hahmon-voima" id="hahmon-voima" required><br>
 
             <label for="hahmon-ketteryys">Ketteryys</label>
-            <input class="text-input" type="number" name="hahmon-ketteryys" id="hahmon-ketteryys" min="1" max="10"><br>
+            <input class="text-input" type="text" name="hahmon-ketteryys" id="hahmon-ketteryys" required><br>
 
             <label for="hahmon-viisaus">Viisaus</label>
-            <input class="text-input" type="number" name="hahmon-viisaus" id="hahmon-viisaus" min="1" max="10"><br>
+            <input class="text-input" type="text" name="hahmon-viisaus" id="hahmon-viisaus" required><br>
 
             <label for="hahmon-kuva">Kuva</label>
-            <input class="text-input" type="text" name="hahmon-kuva" id="hahmon-kuva"><br>
+            <input class="text-input" type="text" name="hahmon-kuva" id="hahmon-kuva" required><br>
 
             <input type="submit" class="button-68" value="Lisää">
+            
         </form>
+        <!-- inputs changing -->
+        <script>
+            $('#hahmon-voima').keyup(function(){
+                var strength = parseInt($('#hahmon-voima').val());
+                var totalNumber = 16;
+                var dexterity = parseInt(Math.ceil((totalNumber - strength) / 2));
+                var wisdom = totalNumber - strength - dexterity;
+                
+                if(isNaN(strength)){
+                    $('#hahmon-voima').val('Enter valid number');
+                } 
+                else if (strength >= 16) {
+                    $('#hahmon-voima').val('Whole sum of features must be 16');
+                }
+                else {
+                    $('#hahmon-ketteryys').val(dexterity);
+                    $('#hahmon-viisaus').val(wisdom);
+                }
+                // if(isNaN(dexterity)){
+                //     $('#hahmon-ketteryys').val('Enter valid number');
+                // } else if ((strength + dexterity) > 16) {
+                //     console.log(strength + dexterity)
+                //     $('#hahmon-ketteryys').val('Whole sum of features must be 16');
+                // } else {
+                //     $('#hahmon-ketteryys').val(dexterity);
+                //     $('#hahmon-viisaus').val(wisdom);
+                // }
+            });
+        </script>
 
         <div class="characters-container">
             <?php 
@@ -193,5 +226,61 @@
                 <?php } ?>
         </div>
     </section>
+
+    <!-- <div class="form-group">
+  <label for="exampleInputPassword1">Rate</label>
+  <input type="text" class="form-control" name="rate" placeholder="Enter Rate" id="rate" required>
+</div>
+<div class="form-group">
+  <label>Quantity</label>
+  <input type="text" class="form-control" name="quantity" placeholder="quantity" value="2" id="qnty" required readonly>
+</div>
+<div class="form-group">
+  <label for="exampleInputPassword2">Amount</label>
+  <input type="text" class="form-control" name="amount" value="" id="amt" placeholder="Amount" required>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+<script>
+  $('#rate').keyup(function(){
+    var rate = parseInt($('#rate').val());
+    var qnty = parseInt($('#qnty').val());
+    var amt = parseInt(rate*qnty);
+    if(isNaN(amt)){
+      $('#amt').val('Enter valid rate');
+    } else {
+      $('#amt').val(amt);
+    }
+
+  });
+
+</script> -->
+
+
+    <!-- <label for="strength">Strength</label>
+    <input type="text" name="strength" placeholder="strength" id="strength" required>
+
+    <label for="dexterity">Dexterity</label>
+    <input type="text" name="dexterity" value="" id="dexterity" placeholder="dexterity" required>
+
+    <label for="wisdom">Wisdom</label>
+    <input type="text" name="wisdom" value="" id="wisdom" placeholder="wisdom" required>
+
+    <script>
+        $('#strength').keyup(function(){
+            var strength = parseInt($('#strength').val());
+            var qnty = 16;
+            var dexterity = parseInt(Math.floor((qnty - strength) / 2));
+            var wisdom = qnty - strength - dexterity;
+            console.log(dexterity)
+            console.log(wisdom)
+            
+            if(isNaN(dexterity)){
+                $('#dexterity').val('Enter valid rate');
+            } else {
+                $('#dexterity').val(dexterity);
+                $('#wisdom').val(wisdom);
+            }
+        });
+    </script> -->
 </body>
 </html>
