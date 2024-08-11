@@ -25,6 +25,7 @@
         $image = htmlspecialchars($_POST['hahmon-kuva']);
 
         $characters = insertNewCharacter($name, $strength, $dexterity, $wisdom, $classID, $raceID, $image);
+        header("Location: index.php/");
 
     } else if (isset($_GET["id"])) {
         $id = htmlspecialchars($_GET['id']);
@@ -164,36 +165,69 @@
             <input class="text-input" type="text" name="hahmon-kuva" id="hahmon-kuva" required><br>
 
             <input type="submit" class="button-68" value="Lisää">
-            
+            <p id="alert"></p>
         </form>
         <!-- inputs changing -->
         <script>
             $('#hahmon-voima').keyup(function(){
+                var message = 'Sum of features must be 16';
+                var validMessage = 'Enter valid number';
                 var strength = parseInt($('#hahmon-voima').val());
-                var totalNumber = 16;
-                var dexterity = parseInt(Math.ceil((totalNumber - strength) / 2));
-                var wisdom = totalNumber - strength - dexterity;
+                
+                var maxNumber = 16;
+                
+
+                var dexterity = parseInt(Math.ceil((maxNumber - strength) / 2));
+                var wisdom = maxNumber - strength - dexterity;
+
+                var totalNumber = dexterity + strength + wisdom;
+                console.log(totalNumber);
                 
                 if(isNaN(strength)){
-                    $('#hahmon-voima').val('Enter valid number');
+                    document.getElementById("alert").innerHTML = validMessage;
                 } 
                 else if (strength >= 16) {
-                    $('#hahmon-voima').val('Whole sum of features must be 16');
+                    console.log(message);
+                    document.getElementById("alert").innerHTML = message;
                 }
                 else {
                     $('#hahmon-ketteryys').val(dexterity);
                     $('#hahmon-viisaus').val(wisdom);
                 }
-                // if(isNaN(dexterity)){
-                //     $('#hahmon-ketteryys').val('Enter valid number');
-                // } else if ((strength + dexterity) > 16) {
-                //     console.log(strength + dexterity)
-                //     $('#hahmon-ketteryys').val('Whole sum of features must be 16');
-                // } else {
-                //     $('#hahmon-ketteryys').val(dexterity);
-                //     $('#hahmon-viisaus').val(wisdom);
-                // }
+                console.log(strength)
+                console.log(dexterity)
+                console.log(wisdom)
+                console.log(totalNumber);
+                if(isNaN(dexterity)){
+                    $('#hahmon-ketteryys').val('Enter valid number');
+                } else if ((strength + dexterity) > 16) {
+                    console.log(strength + dexterity)
+                    $('#hahmon-ketteryys').val('Whole sum of features must be 16');
+                } else {
+                    $('#hahmon-ketteryys').val(dexterity);
+                    $('#hahmon-viisaus').val(wisdom);
+                }
             });
+            // $(document).ready(function() {
+            //     $('input[name="rate"]').on('change',function() {
+            //     var amount = $(this).val()*$('input[name="quantity"]').val();
+            //     $('input[name="amount"]').val(amount);
+            //     })
+            // });
+            
+            // var strength = document.getElementById('hahmon-voima');
+            // var dexterity = document.getElementById('hahmon-ketterys');
+            // var dexterity = document.getElementById('hahmon-ketterys');
+            // var message = 'Sum of features must be 16';
+            // var validMessage = 'Enter valid number';
+            // document.getElementById("alert").innerHTML = message;
+            // strength.addEventListener('input', function() {
+            //     dexterity.value = this.value;
+            // });
+
+            // james.addEventListener('input', function() {
+            // fname.value = this.value;
+            // });
         </script>
 
         <div class="characters-container">
